@@ -277,7 +277,7 @@ export default function Admin() {
             </Field>
             <Field label="Título" required htmlFor="lec-titulo"><Input id="lec-titulo" maxLength="150" required value={lecForm.titulo} onChange={(e) => setLecForm({ ...lecForm, titulo: e.target.value })} /></Field>
             <Field label="Orden" required htmlFor="lec-orden"><Input id="lec-orden" type="number" min="1" max="1000" required value={lecForm.orden} onChange={(e) => setLecForm({ ...lecForm, orden: e.target.value })} /></Field>
-            <Field label="URL del video (opcional)" htmlFor="lec-video"><Input id="lec-video" type="url" maxLength="255" placeholder="YouTube, Vimeo o enlace a MP4/WebM" value={lecForm.url_video} onChange={(e) => setLecForm({ ...lecForm, url_video: e.target.value })} /></Field>
+            <Field label="URL del video (opcional)" htmlFor="lec-video"><Input id="lec-video" type="url" maxLength="255" placeholder="https://…" value={lecForm.url_video} onChange={(e) => setLecForm({ ...lecForm, url_video: e.target.value })} /></Field>
             <div style={{ gridColumn: '1/-1' }}>
               <Field label="Cuerpo de la teoría" required htmlFor="lec-cuerpo"><Textarea id="lec-cuerpo" minLength="10" required value={lecForm.cuerpo_teoria} onChange={(e) => setLecForm({ ...lecForm, cuerpo_teoria: e.target.value })} /></Field>
             </div>

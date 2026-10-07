@@ -5,7 +5,6 @@ import Card, { CardHeader } from '../components/ui/Card.jsx'
 import Button from '../components/ui/Button.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import { Spinner } from '../components/ui/Feedback.jsx'
-import VideoPlayer from '../components/VideoPlayer.jsx'
 import { api, obtenerSesion } from '../api.js'
 
 const EJE_MAP = { 'Números': 'numeros', 'Álgebra y Funciones': 'algebra', 'Geometría': 'geometria', 'Probabilidad y Estadística': 'probabilidad' }
@@ -59,7 +58,7 @@ export default function Contenido() {
           <h2>{leccion.titulo}</h2>
           <p><Badge eje={EJE_MAP[leccion.eje]}>{leccion.eje}</Badge></p>
           <Card variant="flat"><p style={{ whiteSpace: 'pre-wrap', color: 'var(--ink)' }}>{leccion.cuerpo_teoria}</p></Card>
-          {leccion.url_video && <VideoPlayer url={leccion.url_video} />}
+          {leccion.url_video && <p><a href={leccion.url_video} target="_blank" rel="noopener noreferrer">Ver video de apoyo</a></p>}
           <h3>Ejercicios de práctica</h3>
           {leccion.ejercicios.length === 0 && <p className="text-faint">Esta lección aún no tiene ejercicios publicados.</p>}
           <ul className="stack" style={{ '--gap': 'var(--sp-2)' }}>
