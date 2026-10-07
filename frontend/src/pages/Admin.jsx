@@ -8,6 +8,7 @@ import Field, { Input, Select, Textarea } from '../components/ui/Input.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import { Spinner } from '../components/ui/Feedback.jsx'
 import { api, obtenerSesion } from '../api.js'
+import styles from './Admin.module.css'
 
 const TABS = [
   { id: 'instituciones', label: 'Instituciones' },
@@ -28,7 +29,7 @@ export default function Admin() {
 
   // Instituciones
   const [instituciones, setInstituciones] = useState([])
-  const [instForm, setInstForm] = useState({ id: '', nombre: '', rut: '', convenio: 'B2B_PREMIUM' })
+  const [instForm, setInstForm] = useState({ id: '', nombre: '', rut: '' })
   // Administradores
   const [administradores, setAdministradores] = useState([])
   const [admForm, setAdmForm] = useState({ id: '', nombre: '', correo: '', password: '', id_institucion: '', cargo: '' })
@@ -73,10 +74,10 @@ export default function Admin() {
   async function onInst(e) {
     e.preventDefault(); setCargando(true)
     try {
-      const cuerpo = { nombre: instForm.nombre.trim(), rut_identificador: instForm.rut.trim(), convenio_tipo: instForm.convenio }
+      const cuerpo = { nombre: instForm.nombre.trim(), rut_identificador: instForm.rut.trim() }
       if (instForm.id) await api.put(`/api/admin/instituciones/${instForm.id}`, cuerpo)
       else await api.post('/api/admin/instituciones', cuerpo)
-      setInstForm({ id: '', nombre: '', rut: '', convenio: 'B2B_PREMIUM' }); ok(instForm.id ? 'Institución actualizada.' : 'Institución creada.'); cargarTodo()
+      setInstForm({ id: '', nombre: '', rut: '' }); ok(instForm.id ? 'Institución actualizada.' : 'Institución creada.'); cargarTodo()
     } catch (e) { err(e) } finally { setCargando(false) }
   }
   async function instBaja(id) {
@@ -183,25 +184,28 @@ export default function Admin() {
       </div>
 
       {tab === 'instituciones' && (
-        <section className="stack">
+        <section className={`stack ${styles.institutionSection}`}>
           <h2>Instituciones bajo convenio</h2>
-          <form className="grid-auto" style={{ '--min': '220px' }} onSubmit={onInst} noValidate>
-            <Field label="Nombre" required htmlFor="inst-nombre"><Input id="inst-nombre" maxLength="120" required value={instForm.nombre} onChange={(e) => setInstForm({ ...instForm, nombre: e.target.value })} /></Field>
-            <Field label="RUT identificador" required htmlFor="inst-rut"><Input id="inst-rut" maxLength="20" placeholder="76.123.456-7" required value={instForm.rut} onChange={(e) => setInstForm({ ...instForm, rut: e.target.value })} /></Field>
-            <Field label="Tipo de convenio" htmlFor="inst-convenio">
-              <Select id="inst-convenio" value={instForm.convenio} onChange={(e) => setInstForm({ ...instForm, convenio: e.target.value })}><option>B2B_PREMIUM</option><option>B2B_BASIC</option><option>B2B_PILOTO</option></Select>
-            </Field>
-            <div style={{ gridColumn: '1/-1' }}>
+          <form className={styles.institutionForm} onSubmit={onInst} noValidate>
+            <div className={styles.institutionFields}>
+              <Field label="Nombre" required htmlFor="inst-nombre"><Input id="inst-nombre" maxLength="120" required value={instForm.nombre} onChange={(e) => setInstForm({ ...instForm, nombre: e.target.value })} /></Field>
+              <Field label="RUT identificador" required htmlFor="inst-rut"><Input id="inst-rut" maxLength="20" placeholder="76.123.456-7" required value={instForm.rut} onChange={(e) => setInstForm({ ...instForm, rut: e.target.value })} /></Field>
+              <div className={styles.conventionField}>
+                <span className={styles.conventionLabel}>Tipo de convenio</span>
+                <span className={styles.conventionValue}>B2B Premium</span>
+              </div>
+            </div>
+            <div className={styles.institutionActions}>
               <Button loading={cargando}>{instForm.id ? 'Guardar cambios' : 'Crear institución'}</Button>
-              {instForm.id && <Button type="button" variant="ghost" onClick={() => setInstForm({ id: '', nombre: '', rut: '', convenio: 'B2B_PREMIUM' })}>Cancelar edición</Button>}
+              {instForm.id && <Button type="button" variant="ghost" onClick={() => setInstForm({ id: '', nombre: '', rut: '' })}>Cancelar edición</Button>}
             </div>
           </form>
           <Table caption="Instituciones" head={[{ label: 'ID' }, { label: 'Nombre' }, { label: 'RUT' }, { label: 'Convenio' }, { label: 'Usuarios', align: 'right' }, { label: 'Estado' }, { label: 'Acciones' }]}>
             {instituciones.map((i) => (
               <tr key={i.id_institucion}>
-                <td>{i.id_institucion}</td><td>{i.nombre}</td><td>{i.rut_identificador}</td><td>{i.convenio_tipo}</td><td style={{ textAlign: 'right' }}>{i.usuarios}</td><td>{i.activo ? 'Activa' : 'Baja'}</td>
+                <td>{i.id_institucion}</td><td>{i.nombre}</td><td>{i.rut_identificador}</td><td>{i.convenio_tipo === 'B2B_PREMIUM' ? 'B2B Premium' : i.convenio_tipo}</td><td style={{ textAlign: 'right' }}>{i.usuarios}</td><td>{i.activo ? 'Activa' : 'Baja'}</td>
                 <td>
-                  <Button size="sm" variant="outline" onClick={() => setInstForm({ id: i.id_institucion, nombre: i.nombre, rut: i.rut_identificador, convenio: i.convenio_tipo })}>Editar</Button>
+                  <Button size="sm" variant="outline" onClick={() => setInstForm({ id: i.id_institucion, nombre: i.nombre, rut: i.rut_identificador })}>Editar</Button>
                   {i.activo ? <Button size="sm" variant="danger" onClick={() => instBaja(i.id_institucion)}>Baja</Button> : <Button size="sm" variant="success" onClick={() => instReactivar(i.id_institucion)}>Reactivar</Button>}
                 </td>
               </tr>
