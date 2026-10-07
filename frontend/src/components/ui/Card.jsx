@@ -8,9 +8,9 @@ export default function Card({ pad = 'md', variant = 'raised', eje, interactive,
   )
 }
 
-export function CardHeader({ icon, title, subtitle, action }) {
+export function CardHeader({ icon, title, subtitle, action, centered = false }) {
   return (
-    <div className={styles.header}>
+    <div className={`${styles.header} ${centered ? styles.headerCentered : ''}`}>
       <div className={styles.headerText}>
         {icon && <span className={styles.headerIcon} aria-hidden="true">{icon}</span>}
         <div>

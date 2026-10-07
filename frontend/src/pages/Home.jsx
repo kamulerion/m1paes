@@ -98,6 +98,7 @@ export default function Home() {
               <CardHeader
                 icon={<span className={styles.axisNumber}>{String(index + 1).padStart(2, '0')}</span>}
                 title={eje.titulo}
+                centered
               />
               <p>{eje.descripcion}</p>
             </Card>

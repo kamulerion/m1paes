@@ -4,8 +4,7 @@
 
 .hero {
   display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(280px, 0.85fr);
-  align-items: center;
+  justify-items: center;
   gap: clamp(var(--sp-6), 7vw, var(--sp-8));
   padding-block: var(--sp-6) var(--sp-8);
 }
@@ -13,12 +12,13 @@
 .heroCopy {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   gap: var(--sp-4);
+  text-align: center;
 }
 
 .heroCopy h1 {
-  max-width: 13ch;
+  max-width: 22ch;
   font-size: var(--fs-4xl);
 }
 
@@ -32,6 +32,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: var(--sp-3);
   margin-top: var(--sp-2);
 }
@@ -87,6 +88,8 @@
   position: relative;
   overflow: hidden;
   display: flex;
+  align-items: center;
+  width: min(100%, 760px);
   min-height: 300px;
   flex-direction: column;
   justify-content: space-between;
@@ -98,6 +101,7 @@
     linear-gradient(145deg, #24345c, #17213b 75%);
   box-shadow: 8px 8px 0 var(--ink);
   color: var(--paper);
+  text-align: center;
 }
 
 .heroCard::after {
@@ -119,7 +123,8 @@
   z-index: 1;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   gap: var(--sp-3);
 }
 
@@ -144,6 +149,7 @@
 }
 
 .formula {
+  align-self: center;
   position: relative;
   z-index: 1;
   color: var(--paper);
@@ -156,7 +162,7 @@
 .formulaSmall {
   position: relative;
   z-index: 1;
-  align-self: flex-end;
+  align-self: center;
   padding: var(--sp-2) var(--sp-3);
   border: 1px solid rgba(253, 248, 238, 0.2);
   border-radius: var(--radius-sm);
@@ -167,7 +173,7 @@
 }
 
 .heroCardBottom {
-  justify-content: flex-start;
+  justify-content: center;
   color: #d9e2f8;
   font-size: var(--fs-xs);
 }
@@ -185,14 +191,15 @@
 
 .sectionHeading {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
   gap: var(--sp-5);
   margin-bottom: var(--sp-5);
+  text-align: center;
 }
 
 .sectionHeading h2 {
-  max-width: 28ch;
+  max-width: 34ch;
   margin-top: var(--sp-2);
 }
 
@@ -215,6 +222,7 @@
 
 .axisCard {
   height: 100%;
+  text-align: center;
 }
 
 .axisCard > p {
@@ -237,13 +245,14 @@
 .nextStep {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   gap: var(--sp-5);
   padding: var(--sp-6);
   border: 2px solid var(--ink);
   border-radius: var(--radius-lg);
   background: var(--accent-soft);
   box-shadow: 4px 4px 0 var(--ink);
+  text-align: center;
 }
 
 .nextStep h2 {
@@ -255,11 +264,6 @@
 }
 
 @media (max-width: 900px) {
-  .hero {
-    grid-template-columns: minmax(0, 1fr) minmax(250px, 0.8fr);
-    gap: var(--sp-5);
-  }
-
   .axisGrid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -296,8 +300,8 @@
 
   .sectionHeading,
   .nextStep {
-    align-items: flex-start;
-    flex-direction: column;
+    align-items: center;
+    text-align: center;
   }
 
   .axisGrid {

@@ -59,6 +59,20 @@
   margin-bottom: var(--sp-4);
 }
 
+.headerCentered {
+  justify-content: center;
+  text-align: center;
+}
+
+.headerCentered .headerText {
+  flex-direction: column;
+  align-items: center;
+}
+
+.headerCentered .action {
+  align-self: center;
+}
+
 .headerText {
   display: flex;
   align-items: center;
