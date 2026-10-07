@@ -52,7 +52,7 @@ export default function Layout({ children }) {
         {children}
       </main>
       <footer style={{ textAlign: 'center', padding: 'var(--sp-5)', borderTop: '1px dashed var(--line-strong)', color: 'var(--ink-faint)' }}>
-        <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+        <small>M1PAES · Preparación para Competencia Matemática 1</small>
       </footer>
     </>
   )
