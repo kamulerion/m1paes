@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Contenidos — M1PAES</title>
+  <meta name="description" content="Explora los ejes temáticos y sus lecciones publicadas de la PAES M1.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav>
+      <a href="/">Inicio</a> <a href="/ejercicios.html">Ejercicios</a>
+      <a href="/simulacro.html">Simulacros</a> <a href="/avance.html">Mi avance</a>
+      <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="estudiante">
+    <h1>Contenidos por eje temático</h1>
+    <p class="badge">Fase 3 · RF-18</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <!-- RF-15 (Fase 5): publicidad segmentada — solo cuentas Free reciben anuncios -->
+    <aside id="publicidad" class="publicidad oculto" aria-label="Publicidad"></aside>
+
+    <!-- CP-14: exploración de los 4 ejes oficiales con sus lecciones -->
+    <section id="vista-ejes" aria-label="Ejes temáticos">
+      <div id="ejes" class="tarjetas"><p>Cargando ejes…</p></div>
+    </section>
+
+    <!-- Detalle de la lección (teoría completa + ejercicios de práctica) -->
+    <section id="vista-leccion" class="oculto" aria-label="Lección">
+      <button type="button" id="volver" class="boton secundario" style="max-width:230px">← Volver a los ejes</button>
+      <h2 id="lec-titulo"></h2>
+      <p><span class="badge" id="lec-eje"></span></p>
+      <div id="lec-cuerpo" class="leccion-cuerpo"></div>
+      <p id="lec-video" class="oculto"><a id="lec-video-enlace" href="#" target="_blank" rel="noopener">Ver video de apoyo</a></p>
+      <h3>Ejercicios de práctica</h3>
+      <ul id="lec-ejercicios"></ul>
+      <p id="lec-sin-ejercicios" class="oculto">Esta lección aún no tiene ejercicios publicados.</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/estudiante/contenido.js"></script>
+  <script src="/js/publicidad.js"></script>
+</body>
+</html>

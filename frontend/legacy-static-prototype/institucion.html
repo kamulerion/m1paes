@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi sede — M1PAES</title>
+  <meta name="description" content="Panel del Administrador de Institución: matrícula de estudiantes, reporte de rendimiento y calendario de ensayos de la sede.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a></nav>
+  </header>
+
+  <main class="admin">
+    <h1>Panel de mi sede</h1>
+    <p class="badge" id="rol-admin">…</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <nav class="secciones" role="tablist" aria-label="Secciones del panel">
+      <button type="button" class="seccion activa" data-seccion="estudiantes" role="tab"
+              aria-selected="true" aria-controls="seccion-estudiantes">Estudiantes (RF-07)</button>
+      <button type="button" class="seccion" data-seccion="reporte" role="tab"
+              aria-selected="false" aria-controls="seccion-reporte">Reportes (RF-14)</button>
+      <button type="button" class="seccion" data-seccion="calendario" role="tab"
+              aria-selected="false" aria-controls="seccion-calendario">Calendario (RF-16)</button>
+    </nav>
+
+    <!-- RF-07: matrícula, edición y baja de estudiantes de la sede -->
+    <section id="seccion-estudiantes" class="panel activa" role="tabpanel" aria-label="Estudiantes">
+      <h2>Matrícula de estudiantes</h2>
+      <form id="form-estudiante" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="est-id">
+        <div>
+          <label for="est-nombre">Nombre completo</label>
+          <input id="est-nombre" type="text" maxlength="100" required>
+        </div>
+        <div>
+          <label for="est-correo">Correo electrónico</label>
+          <input id="est-correo" type="email" maxlength="150" required>
+        </div>
+        <div>
+          <label for="est-password">Contraseña inicial</label>
+          <input id="est-password" type="password" minlength="8" autocomplete="new-password">
+        </div>
+        <div>
+          <label for="est-matricula">Matrícula (opcional)</label>
+          <input id="est-matricula" type="text" maxlength="50" placeholder="MAT-001">
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="est-boton">Matricular estudiante</button>
+          <button class="boton secundario oculto" type="button" id="est-cancelar">Cancelar edición</button>
+          <p id="est-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <h3>Estudiantes de la sede</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-estudiantes">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Matrícula</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RF-14: reporte consolidado del rendimiento de la sede -->
+    <section id="seccion-reporte" class="panel" role="tabpanel" aria-label="Reportes">
+      <h2>Reporte de rendimiento de la sede</h2>
+      <p class="etiqueta" id="rep-sede">…</p>
+      <div class="cifras" id="rep-resumen"></div>
+
+      <h3>Áreas débiles (menor progreso promedio primero)</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-reporte">
+          <thead>
+            <tr><th>#</th><th>Eje temático</th><th>Progreso promedio</th><th>Respuestas</th><th>Aciertos</th><th>Diagnóstico</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="rep-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+    </section>
+
+    <!-- RF-16: calendario de ensayos de la sede -->
+    <section id="seccion-calendario" class="panel" role="tabpanel" aria-label="Calendario">
+      <h2>Calendario de ensayos de la sede</h2>
+      <form id="form-evento" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="ev-id">
+        <div>
+          <label for="ev-titulo">Título</label>
+          <input id="ev-titulo" type="text" maxlength="150" placeholder="Ensayo DEMRE N° 3" required>
+        </div>
+        <div>
+          <label for="ev-fecha">Fecha y hora</label>
+          <input id="ev-fecha" type="datetime-local" required>
+        </div>
+        <div class="ancho">
+          <label for="ev-descripcion">Descripción (opcional)</label>
+          <textarea id="ev-descripcion" maxlength="2000"></textarea>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="ev-boton">Asignar evento</button>
+          <button class="boton secundario oculto" type="button" id="ev-cancelar">Cancelar edición</button>
+          <p id="ev-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <h3>Eventos publicados</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-calendario">
+          <thead>
+            <tr><th>ID</th><th>Título</th><th>Fecha y hora</th><th>Descripción</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/panel.js"></script>
+  <script src="/js/institucion/institucion.js"></script>
+  <script src="/js/institucion/estudiantes.js"></script>
+  <script src="/js/institucion/reporte.js"></script>
+  <script src="/js/institucion/calendario.js"></script>
+</body>
+</html>

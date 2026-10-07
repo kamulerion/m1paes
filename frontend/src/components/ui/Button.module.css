@@ -1,0 +1,81 @@
+.btn {
+  --btn-bg: var(--primary);
+  --btn-fg: #fff;
+  --btn-border: var(--ink);
+  --btn-shadow: 3px 3px 0 var(--ink);
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  color: var(--btn-fg);
+  background: var(--btn-bg);
+  border: 2px solid var(--btn-border);
+  border-radius: var(--radius);
+  box-shadow: var(--btn-shadow);
+  transition:
+    transform var(--t-fast) var(--ease),
+    box-shadow var(--t-fast) var(--ease),
+    background-color var(--t) var(--ease);
+  cursor: pointer;
+  user-select: none;
+}
+
+.btn:hover:not(:disabled) {
+  color: var(--btn-fg);
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0 var(--ink);
+}
+
+.btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 1px 1px 0 var(--ink);
+}
+
+.btn:disabled,
+.btn[aria-disabled='true'] {
+  opacity: 0.55;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+/* --- Tamaños --- */
+.sm { padding: 0.5rem 0.85rem; font-size: var(--fs-sm); border-radius: var(--radius-sm); --btn-shadow: 2px 2px 0 var(--ink); }
+.md { padding: 0.75rem 1.2rem; font-size: var(--fs-md); }
+.lg { padding: 0.95rem 1.6rem; font-size: var(--fs-lg); }
+
+.full { width: 100%; }
+
+/* --- Variantes --- */
+.primary { --btn-bg: var(--primary); --btn-fg: #fff; }
+.primary:hover:not(:disabled) { background: var(--primary-hover); }
+
+.secondary { --btn-bg: var(--accent); --btn-fg: var(--ink); }
+
+.success { --btn-bg: var(--success); --btn-fg: #fff; }
+
+.danger { --btn-bg: var(--error); --btn-fg: #fff; }
+
+.outline { --btn-bg: var(--surface); --btn-fg: var(--ink); }
+.outline:hover:not(:disabled) { background: var(--paper-2); }
+
+.ghost {
+  --btn-bg: transparent;
+  --btn-fg: var(--ink);
+  --btn-border: transparent;
+  --btn-shadow: none;
+}
+.ghost:hover:not(:disabled) {
+  background: var(--paper-2);
+  box-shadow: none;
+  transform: none;
+}
+.ghost:active:not(:disabled) { box-shadow: none; transform: none; }
+
+.spin { animation: spin 0.9s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }

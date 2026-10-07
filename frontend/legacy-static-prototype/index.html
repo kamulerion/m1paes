@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>M1PAES — Preparación PAES Competencia Matemática 1</title>
+  <meta name="description" content="Plataforma web de educación matemática para la preparación de la PAES M1.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <span class="brand">M1<span class="accent">PAES</span></span>
+    <nav>
+      <a href="/contenido.html">Contenidos</a> <a href="/ejercicios.html">Ejercicios</a>
+      <a href="/simulacro.html">Simulacros</a> <a href="/avance.html">Mi avance</a>
+      <a id="enlace-sede" href="/institucion.html" hidden>Mi sede</a>
+      <a id="enlace-admin" href="/admin.html" hidden>Administración</a>
+      <a id="enlace-sesion" href="/login.html">Ingresar</a>
+    </nav>
+  </header>
+
+  <main>
+    <h1>Prepara tu PAES de Competencia Matemática 1</h1>
+    <p>
+      Plataforma de estudio con contenidos por eje temático (Números, Álgebra y Funciones,
+      Geometría, Probabilidad y Estadística), ejercicios interactivos con retroalimentación
+      y simulacros cronometrados tipo DEMRE.
+    </p>
+    <p class="badge">MVP en construcción — Fase 5 (publicidad Free + pulido)</p>
+
+    <!-- RF-15 (Fase 5): publicidad segmentada — solo cuentas Free reciben anuncios -->
+    <aside id="publicidad" class="publicidad oculto" aria-label="Publicidad"></aside>
+
+    <section>
+      <h2>Estado de la API</h2>
+      <p id="api-status">Verificando conexión con la API…</p>
+    </section>
+
+    <section>
+      <h2>Tu sesión</h2>
+      <p id="sesion-estado">Verificando sesión…</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/publicidad.js"></script>
+</body>
+</html>

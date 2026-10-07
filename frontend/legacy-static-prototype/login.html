@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ingresar — M1PAES</title>
+  <meta name="description" content="Inicio de sesión seguro en la plataforma M1PAES.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/registro.html">Crear cuenta</a></nav>
+  </header>
+
+  <main>
+    <section class="tarjeta">
+      <h1>Ingresar</h1>
+      <p id="aviso-creada" class="mensaje exito" role="status" aria-live="polite" hidden></p>
+
+      <form id="login-form" class="formulario" novalidate>
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" name="correo" type="email" autocomplete="email" maxlength="150" required>
+
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" minlength="8" required>
+
+        <button class="boton" type="submit">Ingresar</button>
+        <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="enlaces">
+        <a href="/registro.html">¿No tienes cuenta? Regístrate</a>
+        <a href="/recuperar.html">Olvidé mi contraseña</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

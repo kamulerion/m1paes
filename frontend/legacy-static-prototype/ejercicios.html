@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicios — M1PAES</title>
+  <meta name="description" content="Practica ejercicios con retroalimentación inmediata.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav>
+      <a href="/">Inicio</a> <a href="/contenido.html">Contenidos</a>
+      <a href="/simulacro.html">Simulacros</a> <a href="/avance.html">Mi avance</a>
+      <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="estudiante">
+    <h1>Práctica de ejercicios</h1>
+    <p class="badge">Fase 3 · RF-11</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <!-- RF-15 (Fase 5): publicidad segmentada — solo cuentas Free reciben anuncios -->
+    <aside id="publicidad" class="publicidad oculto" aria-label="Publicidad"></aside>
+
+    <!-- Selección: lección → lista de ejercicios -->
+    <section id="vista-seleccion" aria-label="Elegir ejercicio">
+      <form id="form-seleccion" class="formulario formulario-columnas" novalidate>
+        <div>
+          <label for="sel-leccion">Elige una lección</label>
+          <select id="sel-leccion" required></select>
+        </div>
+      </form>
+      <h2>Ejercicios disponibles</h2>
+      <div id="lista-ejercicios" class="lista-caja"><p>Cargando…</p></div>
+    </section>
+
+    <!-- Ejercicio en curso con retroalimentación inmediata -->
+    <section id="vista-ejercicio" class="oculto" aria-label="Ejercicio">
+      <button type="button" id="volver" class="boton secundario" style="max-width:230px">← Elegir otro ejercicio</button>
+      <p class="etiqueta" id="ej-dificultad"></p>
+      <h2 id="ej-enunciado"></h2>
+      <form id="form-ejercicio" novalidate>
+        <div id="ej-alternativas" class="alternativas"></div>
+        <button class="boton" type="submit" id="ej-responder">Responder</button>
+      </form>
+      <!-- CP-15 / CP-16: éxito o solución paso a paso -->
+      <p id="ej-retro" class="mensaje" role="status" aria-live="polite"></p>
+      <div id="ej-progreso" class="oculto">
+        <p class="etiqueta">Progreso de la lección: <span id="ej-progreso-valor"></span></p>
+        <div class="barra"><span id="ej-progreso-barra"></span></div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/estudiante/ejercicios.js"></script>
+  <script src="/js/publicidad.js"></script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+.page {
+  padding-block: var(--sp-7);
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-6);
+}
+
+.hero h1 {
+  font-size: var(--fs-4xl);
+}
+
+.hero p {
+  max-width: 60ch;
+  font-size: var(--fs-lg);
+}
+
+.section {
+  margin-bottom: var(--sp-7);
+}
+
+.sectionTitle {
+  font-size: var(--fs-xl);
+  margin-bottom: var(--sp-4);
+}
+
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: var(--sp-4);
+}
+
+.swatch {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  font-size: var(--fs-sm);
+}
+
+.swatch code {
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+}
+
+.swatchColor {
+  height: 56px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
+  margin-bottom: var(--sp-2);
+}
+
+.ejeDesc {
+  font-size: var(--fs-sm);
+  margin-bottom: var(--sp-4);
+  min-height: 3em;
+}
+
+.ejeSymbol {
+  position: absolute;
+  right: var(--sp-4);
+  top: var(--sp-4);
+  font-family: 'Times New Roman', Georgia, serif;
+  font-style: italic;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--eje);
+  opacity: 0.25;
+}
+
+.formGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--sp-5);
+}

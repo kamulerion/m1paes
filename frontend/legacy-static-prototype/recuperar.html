@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Recuperar contraseña — M1PAES</title>
+  <meta name="description" content="Solicitud de recuperación de contraseña de la plataforma M1PAES.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/login.html">Ingresar</a></nav>
+  </header>
+
+  <main>
+    <section class="tarjeta">
+      <h1>Recuperar contraseña</h1>
+      <p>Ingresa el correo de tu cuenta y te enviaremos un enlace para elegir una contraseña nueva.</p>
+
+      <form id="recuperar-form" class="formulario" novalidate>
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" name="correo" type="email" autocomplete="email" maxlength="150" required>
+
+        <button class="boton" type="submit">Enviar enlace</button>
+        <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+      </form>
+
+      <div id="enlace-dev" hidden>
+        <p class="aviso-dev">
+          Entorno de desarrollo: el correo se imprime en la consola del servidor.
+          Usa este enlace para continuar (en producción llegaría por correo):
+        </p>
+        <p><a id="enlace-restablecer" href="#">Abrir formulario de contraseña nueva</a></p>
+      </div>
+
+      <p class="enlaces">
+        <a href="/login.html">Volver al inicio de sesión</a>
+        <a href="/registro.html">Crear una cuenta</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/recuperar.js"></script>
+</body>
+</html>

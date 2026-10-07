@@ -1,0 +1,3 @@
+Verificación M1PAES — 2026-10-07
+Frontend: instalación auditada tras actualizar dependencias; 0 vulnerabilidades reportadas.
+Backend: npm audit --omit=dev; 0 vulnerabilidades reportadas.

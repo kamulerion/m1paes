@@ -1,0 +1,25 @@
+services:
+  - type: web
+    name: m1paes
+    runtime: node
+    plan: free
+    buildCommand: npm ci --prefix frontend && npm --prefix frontend run build && npm ci --prefix backend --omit=dev
+    startCommand: npm --prefix backend start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: HOST
+        value: 0.0.0.0
+      - key: TRUST_PROXY
+        value: "1"
+      - key: APP_BASE_URL
+        value: https://m1paes.online
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: EMAIL_FROM
+        value: "M1PAES <no-reply@m1paes.online>"

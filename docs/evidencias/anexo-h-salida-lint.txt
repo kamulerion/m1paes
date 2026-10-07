@@ -1,0 +1,3 @@
+Verificación M1PAES — 2026-10-07
+Comando: npm run lint (backend y frontend React)
+Resultado: salida 0; ESLint sin errores.

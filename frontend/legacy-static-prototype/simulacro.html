@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Simulacros — M1PAES</title>
+  <meta name="description" content="Rinde simulacros cronometrados con puntaje 100–1000.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav>
+      <a href="/">Inicio</a> <a href="/contenido.html">Contenidos</a>
+      <a href="/ejercicios.html">Ejercicios</a> <a href="/avance.html">Mi avance</a>
+      <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="estudiante">
+    <h1>Simulacros oficiales</h1>
+    <p class="badge">Fase 3 · RF-12</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <!-- RF-15 (Fase 5): publicidad segmentada — solo cuentas Free reciben anuncios -->
+    <aside id="publicidad" class="publicidad oculto" aria-label="Publicidad"></aside>
+
+    <!-- Listado de simulacros disponibles -->
+    <section id="vista-lista" aria-label="Simulacros disponibles">
+      <div class="tabla-contenedor">
+        <table id="tabla-simulacros">
+          <thead>
+            <tr><th>Nombre</th><th>Preguntas</th><th>Compuestas</th><th>Tiempo</th><th></th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p class="aviso-dev">Formato oficial: 65 preguntas · 140 minutos · puntaje 100 a 1000.</p>
+    </section>
+
+    <!-- Rendición cronometrada (CP-17) -->
+    <section id="vista-rinden" class="oculto" aria-label="Simulacro en curso">
+      <div class="cronometro" id="cronometro">
+        <span id="sim-nombre"></span>
+        <span class="tiempo" id="sim-tiempo">--:--</span>
+      </div>
+      <p class="etiqueta" id="pregunta-numero"></p>
+      <h2 id="pregunta-enunciado"></h2>
+      <div id="pregunta-alternativas" class="alternativas"></div>
+      <p id="pregunta-guardada" class="mensaje" role="status" aria-live="polite"></p>
+      <div class="pregunta-nav">
+        <button type="button" id="btn-anterior" class="boton secundario">← Anterior</button>
+        <button type="button" id="btn-finalizar" class="boton" style="max-width:260px">Finalizar simulacro</button>
+        <button type="button" id="btn-siguiente" class="boton secundario">Siguiente →</button>
+      </div>
+    </section>
+
+    <!-- Resultado: puntaje 100–1000 + revisión -->
+    <section id="vista-resultado" class="oculto" aria-label="Resultado">
+      <h2>Resultado del simulacro</h2>
+      <p class="puntaje-final" id="res-puntaje"></p>
+      <div class="cifras" id="res-cifras"></div>
+      <h3>Revisión por pregunta</h3>
+      <ul id="res-detalle" class="revision"></ul>
+      <button type="button" id="res-volver" class="boton" style="max-width:260px">Volver a simulacros</button>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/estudiante/simulacro.js"></script>
+  <script src="/js/publicidad.js"></script>
+</body>
+</html>

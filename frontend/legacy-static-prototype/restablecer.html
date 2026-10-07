@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Nueva contraseña — M1PAES</title>
+  <meta name="description" content="Definición de una contraseña nueva en M1PAES.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/login.html">Ingresar</a></nav>
+  </header>
+
+  <main>
+    <section class="tarjeta">
+      <h1>Elige una contraseña nueva</h1>
+      <p>El enlace es de un solo uso y caduca a los 30 minutos.</p>
+
+      <form id="restablecer-form" class="formulario" novalidate>
+        <label for="token">Token de recuperación</label>
+        <input id="token" name="token" type="text" readonly required>
+
+        <label for="password">Nueva contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <small>Mínimo 8 caracteres.</small>
+
+        <label for="password2">Repite la nueva contraseña</label>
+        <input id="password2" name="password2" type="password" autocomplete="new-password" minlength="8" required>
+
+        <button class="boton" type="submit">Guardar contraseña</button>
+        <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="enlaces">
+        <a href="/recuperar.html">Solicitar un enlace nuevo</a>
+        <a href="/login.html">Volver al inicio de sesión</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/restablecer.js"></script>
+</body>
+</html>

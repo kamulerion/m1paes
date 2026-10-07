@@ -1,0 +1,85 @@
+.barWrap {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+  width: 100%;
+}
+
+.barHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--sp-2);
+  font-size: var(--fs-sm);
+}
+
+.barLabel {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.barValue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  color: var(--eje, var(--primary));
+}
+
+.track {
+  width: 100%;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+}
+
+.sm { height: 6px; }
+.md { height: 10px; }
+.lg { height: 14px; }
+
+.fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--eje, var(--primary));
+  /* rayitas diagonales tipo cuaderno */
+  background-image: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.18) 0 6px,
+    transparent 6px 12px
+  );
+  transition: width 700ms var(--ease);
+}
+
+/* --- Anillo --- */
+.ring {
+  position: relative;
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.ringTrack {
+  fill: none;
+  stroke: var(--paper-2);
+}
+
+.ringFill {
+  fill: none;
+  stroke: var(--eje, var(--primary));
+  stroke-linecap: round;
+  transition: stroke-dashoffset 900ms var(--ease);
+}
+
+.ringCenter {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  text-align: center;
+}
+
+.ringValue {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.15em;
+  color: var(--ink);
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta — M1PAES</title>
+  <meta name="description" content="Autoregistro de estudiante gratis en la plataforma M1PAES.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/login.html">Ingresar</a></nav>
+  </header>
+
+  <main>
+    <section class="tarjeta">
+      <h1>Crea tu cuenta gratis</h1>
+      <p>Registro de Estudiante Free: estudia contenidos, ejercicios y simulacros PAES M1.</p>
+
+      <form id="registro-form" class="formulario" novalidate>
+        <label for="nombre">Nombre completo</label>
+        <input id="nombre" name="nombre" type="text" autocomplete="name" maxlength="100" required>
+
+        <label for="correo">Correo electrónico</label>
+        <input id="correo" name="correo" type="email" autocomplete="email" maxlength="150" required>
+
+        <label for="password">Contraseña</label>
+        <input id="password" name="password" type="password" autocomplete="new-password" minlength="8" required>
+        <small>Mínimo 8 caracteres.</small>
+
+        <label for="password2">Repite la contraseña</label>
+        <input id="password2" name="password2" type="password" autocomplete="new-password" minlength="8" required>
+
+        <button class="boton" type="submit">Crear cuenta</button>
+        <p id="mensaje" class="mensaje" role="status" aria-live="polite"></p>
+      </form>
+
+      <p class="enlaces">
+        <a href="/login.html">¿Ya tienes cuenta? Inicia sesión</a>
+        <a href="/recuperar.html">Olvidé mi contraseña</a>
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/registro.js"></script>
+</body>
+</html>

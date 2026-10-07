@@ -1,0 +1,110 @@
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-1);
+}
+
+.label {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.required {
+  color: var(--error);
+}
+
+.control {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input {
+  width: 100%;
+  padding: 0.7rem 0.9rem;
+  background: var(--surface);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius);
+  color: var(--ink);
+  transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+
+.input::placeholder {
+  color: var(--ink-faint);
+}
+
+.input:hover {
+  border-color: var(--ink-faint);
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+
+.input:disabled {
+  background: var(--paper-2);
+  cursor: not-allowed;
+}
+
+.withIcon { padding-left: 2.6rem; }
+.withToggle { padding-right: 2.8rem; }
+
+.textarea {
+  min-height: 110px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.select {
+  appearance: none;
+  padding-right: 2.5rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%231e2a4a' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.9rem center;
+  cursor: pointer;
+}
+
+.icon {
+  position: absolute;
+  left: 0.85rem;
+  color: var(--ink-faint);
+  pointer-events: none;
+}
+
+.toggle {
+  position: absolute;
+  right: 0.4rem;
+  display: grid;
+  place-items: center;
+  width: 2.2rem;
+  height: 2.2rem;
+  border-radius: var(--radius-sm);
+  color: var(--ink-soft);
+}
+
+.toggle:hover {
+  background: var(--paper-2);
+  color: var(--ink);
+}
+
+.hint {
+  font-size: var(--fs-xs);
+  color: var(--ink-faint);
+}
+
+.error {
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  color: var(--error);
+}
+
+.hasError .input {
+  border-color: var(--error);
+}
+
+.hasError .input:focus {
+  box-shadow: 0 0 0 4px var(--error-soft);
+}

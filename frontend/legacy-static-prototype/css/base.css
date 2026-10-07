@@ -1,0 +1,552 @@
+:root {
+  --azul: #1d4ed8;
+  --azul-oscuro: #1e3a8a;
+  --texto: #1f2937;
+  --fondo: #f8fafc;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  color: var(--texto);
+  background: var(--fondo);
+  line-height: 1.6;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.9rem 1.5rem;
+  background: var(--azul-oscuro);
+  color: #fff;
+}
+
+.brand { font-size: 1.3rem; font-weight: 700; letter-spacing: 0.5px; }
+.brand .accent { color: #93c5fd; }
+
+.site-header nav a {
+  color: #e0e7ff;
+  text-decoration: none;
+  margin-left: 1rem;
+  font-size: 0.95rem;
+}
+
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+h1 { color: var(--azul-oscuro); }
+
+.badge {
+  display: inline-block;
+  background: #dbeafe;
+  color: var(--azul-oscuro);
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  font-size: 0.85rem;
+}
+
+#api-status {
+  font-family: ui-monospace, monospace;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  white-space: pre-wrap;
+}
+
+footer {
+  text-align: center;
+  padding: 1.5rem;
+  color: #64748b;
+}
+
+/* --- Formularios y tarjetas (Fase 1: autenticación) --- */
+
+.tarjeta {
+  max-width: 440px;
+  margin: 2rem auto;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.75rem;
+}
+
+.tarjeta h1 { margin-top: 0; font-size: 1.5rem; }
+
+.formulario label {
+  display: block;
+  font-weight: 600;
+  margin: 0.9rem 0 0.3rem;
+}
+
+.formulario input {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+}
+
+.formulario input:focus-visible,
+.formulario button:focus-visible,
+a:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+.boton {
+  display: inline-block;
+  width: 100%;
+  margin-top: 1.25rem;
+  padding: 0.7rem 1rem;
+  background: var(--azul);
+  color: #fff;
+  border: 0;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.boton:hover { background: var(--azul-oscuro); }
+
+.boton.secundario {
+  background: #fff;
+  color: var(--azul);
+  border: 1px solid var(--azul);
+}
+
+.mensaje {
+  padding: 0.65rem 0.9rem;
+  border-radius: 8px;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+}
+
+.mensaje:empty { display: none; }
+.mensaje.error { background: #fee2e2; color: #991b1b; border: 1px solid #fecaca; }
+.mensaje.exito { background: #dcfce7; color: #166534; border: 1px solid #bbf7d0; }
+
+.enlaces {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 1.1rem;
+  font-size: 0.92rem;
+}
+
+.datos-usuario { margin: 1rem 0; }
+.datos-usuario dt { font-weight: 700; color: var(--azul-oscuro); margin-top: 0.75rem; }
+.datos-usuario dd { margin: 0.15rem 0 0; }
+
+.aviso-dev {
+  font-size: 0.85rem;
+  color: #64748b;
+  border-left: 3px solid #cbd5e1;
+  padding-left: 0.75rem;
+}
+
+/* --- Panel de administración (Fase 2: RF-05, RF-06, RF-08, RF-09, RF-10) --- */
+
+main.admin { max-width: 1100px; }
+
+.secciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1.25rem 0;
+}
+
+.seccion {
+  padding: 0.55rem 1rem;
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--azul-oscuro);
+  cursor: pointer;
+}
+
+.seccion.activa {
+  background: var(--azul);
+  border-color: var(--azul);
+  color: #fff;
+}
+
+.panel { display: none; }
+.panel.activa { display: block; }
+
+.tabla-contenedor {
+  overflow-x: auto;
+  margin-top: 0.75rem;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  font-size: 0.93rem;
+}
+
+th, td {
+  text-align: left;
+  padding: 0.55rem 0.7rem;
+  border-bottom: 1px solid #e2e8f0;
+  vertical-align: top;
+}
+
+th { background: #f1f5f9; color: var(--azul-oscuro); }
+tbody tr:hover { background: #f8fafc; }
+
+.acciones button {
+  margin: 0 0.35rem 0.35rem 0;
+  padding: 0.3rem 0.7rem;
+  border-radius: 6px;
+  border: 1px solid var(--azul);
+  background: #fff;
+  color: var(--azul);
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.acciones button.peligro { border-color: #dc2626; color: #dc2626; }
+.acciones button:hover { background: #eff6ff; }
+.acciones button.peligro:hover { background: #fef2f2; }
+
+/* Formularios del panel en varias columnas */
+.formulario-columnas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 0 1rem;
+  align-items: end;
+}
+
+.formulario-columnas .ancho { grid-column: 1 / -1; }
+
+select, textarea {
+  width: 100%;
+  padding: 0.6rem 0.75rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #fff;
+  font-family: inherit;
+  color: inherit;
+}
+
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--azul);
+  outline-offset: 2px;
+}
+
+textarea { min-height: 96px; resize: vertical; }
+
+/* Filas de alternativas (RF-09: 4 a 5 opciones con una sola correcta) */
+.alternativa {
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+  margin: 0.45rem 0;
+}
+
+.alternativa input[type="radio"] { width: auto; flex-shrink: 0; }
+.alternativa input[type="text"] { flex: 1; }
+
+.alternativa .quitar {
+  padding: 0.3rem 0.6rem;
+  border-radius: 6px;
+  border: 1px solid #dc2626;
+  background: #fff;
+  color: #dc2626;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* Listas dobles de composición de simulacros (RF-10) */
+.listas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+@media (max-width: 760px) { .listas { grid-template-columns: 1fr; } }
+
+.lista-caja {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  background: #fff;
+  padding: 0.75rem;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.lista-caja h4 { margin: 0 0 0.5rem; color: var(--azul-oscuro); }
+.lista-caja ul { list-style: none; margin: 0; padding: 0; }
+
+.lista-caja li {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.25rem;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 0.9rem;
+}
+
+.lista-caja li:last-child { border-bottom: 0; }
+.lista-caja .texto-item { flex: 1; overflow-wrap: anywhere; }
+
+.lista-caja button {
+  padding: 0.2rem 0.55rem;
+  border-radius: 6px;
+  border: 1px solid var(--azul);
+  background: #fff;
+  color: var(--azul);
+  cursor: pointer;
+  font-weight: 700;
+}
+
+.lista-caja button.peligro { border-color: #dc2626; color: #dc2626; }
+
+.oculto { display: none !important; }
+
+.etiqueta {
+  font-weight: 700;
+  color: var(--azul-oscuro);
+}
+
+.texto-largo {
+  max-width: 340px;
+  overflow-wrap: anywhere;
+}
+
+/* --- Módulo estudiante (Fase 3: RF-11, RF-12, RF-13, RF-18) --- */
+
+main.estudiante { max-width: 960px; }
+
+.boton:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Ejes temáticos (CP-14) */
+.tarjetas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.tarjeta-eje {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.1rem 1.25rem;
+}
+
+.tarjeta-eje h2 { margin-top: 0; color: var(--azul-oscuro); font-size: 1.17rem; }
+.tarjeta-eje p { margin: 0.25rem 0 0.75rem; color: #475569; }
+.tarjeta-eje ul { list-style: none; margin: 0; padding: 0; }
+.tarjeta-eje li { padding: 0.4rem 0; border-top: 1px solid #f1f5f9; overflow-wrap: anywhere; }
+.tarjeta-eje a { color: var(--azul); font-weight: 600; }
+
+/* Lección: la teoría puede traer saltos de línea reales */
+.leccion-cuerpo {
+  white-space: pre-wrap;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 1.25rem;
+  margin-top: 1rem;
+  overflow-wrap: anywhere;
+}
+
+/* Listas de ejercicios */
+.lista-simple { list-style: none; margin: 0; padding: 0; }
+
+.lista-item {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.55rem 0;
+  border-bottom: 1px solid #f1f5f9;
+  overflow-wrap: anywhere;
+}
+
+.boton-mini {
+  padding: 0.3rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid var(--azul);
+  background: #fff;
+  color: var(--azul);
+  font-weight: 700;
+  font-size: 0.85rem;
+  cursor: pointer;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.boton-mini:hover { background: #eff6ff; }
+
+/* Práctica (RF-11): alternativas como tarjetas clicables */
+.alternativas { margin-top: 0.75rem; }
+
+.alternativas .alternativa {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.55rem 0.75rem;
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.alternativas .alternativa:hover { border-color: var(--azul); }
+
+/* Barras de progreso por eje (RF-13) */
+.barra {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 999px;
+  overflow: hidden;
+  margin: 0.25rem 0 0.9rem;
+}
+
+.barra span {
+  display: block;
+  height: 100%;
+  background: var(--azul);
+  border-radius: 999px;
+  transition: width 0.3s;
+}
+
+.fila-eje {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  font-weight: 600;
+  color: var(--azul-oscuro);
+  margin-top: 0.5rem;
+}
+
+/* Cifras de resumen */
+.cifras {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.cifra {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: #475569;
+}
+
+.cifra strong { display: block; font-size: 1.6rem; color: var(--azul-oscuro); }
+
+/* Simulacro cronometrado (RF-12) */
+.cronometro {
+  position: sticky;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  background: var(--azul-oscuro);
+  color: #fff;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.cronometro .tiempo {
+  font-family: ui-monospace, monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+}
+
+.cronometro.peligro .tiempo { color: #fecaca; animation: parpadeo 1s steps(2) infinite; }
+
+@keyframes parpadeo { 50% { opacity: 0.35; } }
+
+.pregunta-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.pregunta-nav .boton { width: auto; margin-top: 0; padding: 0.6rem 1.25rem; }
+
+.puntaje-final {
+  font-size: 3.2rem;
+  font-weight: 800;
+  color: var(--azul-oscuro);
+  text-align: center;
+  margin: 1rem 0;
+}
+
+/* Revisión del simulacro al finalizar */
+.revision {
+  list-style: none;
+  margin: 0.5rem 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.4rem;
+}
+
+.revision li {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  font-size: 0.9rem;
+}
+
+.revision li.ok { border-color: #bbf7d0; background: #f0fdf4; }
+.revision li.mal { border-color: #fecaca; background: #fef2f2; }
+.revision li.blanco { color: #64748b; }
+.revision .marca { font-weight: 800; margin-right: 0.35rem; }
+
+/* --- Publicidad formativa Free (Fase 5: RF-15, CP-21) --- */
+.publicidad {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.35rem 0.75rem;
+  margin: 1rem 0;
+  padding: 0.8rem 1rem;
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 4px solid #f59e0b;
+  border-radius: 10px;
+}
+
+.publicidad .etiqueta {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #92400e;
+  background: #fef3c7;
+  border-radius: 4px;
+  padding: 0.1rem 0.5rem;
+}
+
+.publicidad strong { color: var(--azul-oscuro); }
+.publicidad .anuncio-titulo { font-weight: 600; color: var(--texto); }
+.publicidad .anuncio-texto { color: #475569; font-size: 0.92rem; }

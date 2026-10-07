@@ -1,0 +1,90 @@
+.card {
+  position: relative;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  color: var(--ink);
+  text-decoration: none;
+  display: block;
+}
+
+.pad-none { padding: 0; }
+.pad-sm { padding: var(--sp-4); }
+.pad-md { padding: var(--sp-5); }
+.pad-lg { padding: var(--sp-6); }
+
+.flat {
+  border: 1px solid var(--line);
+}
+
+.raised {
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+}
+
+.pop {
+  border: 2px solid var(--ink);
+  box-shadow: var(--shadow-pop);
+}
+
+/* Franja superior con el color del eje */
+.eje {
+  overflow: hidden;
+}
+.eje::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 6px;
+  background: var(--eje);
+}
+
+.interactive {
+  cursor: pointer;
+  transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
+}
+.interactive:hover {
+  color: var(--ink);
+  transform: translateY(-3px) rotate(-0.4deg);
+  box-shadow: var(--shadow-lg);
+}
+.pop.interactive:hover {
+  box-shadow: 6px 6px 0 var(--ink);
+}
+
+.header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--sp-3);
+  margin-bottom: var(--sp-4);
+}
+
+.headerText {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+}
+
+.headerIcon {
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius);
+  background: var(--eje-soft, var(--primary-soft));
+  color: var(--eje, var(--primary));
+  flex-shrink: 0;
+}
+
+.title {
+  font-size: var(--fs-lg);
+}
+
+.subtitle {
+  font-size: var(--fs-sm);
+  color: var(--ink-soft);
+}
+
+.action {
+  flex-shrink: 0;
+}

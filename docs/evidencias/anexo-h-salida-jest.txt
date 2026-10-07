@@ -1,0 +1,5 @@
+Verificación M1PAES — 2026-10-07
+Comando: npm run test:coverage
+Resultado: 11 suites aprobadas; 99 pruebas aprobadas; 0 fallidas.
+Cobertura: 87,23 % instrucciones; 66,39 % ramas; 96,59 % funciones; 89,77 % líneas.
+Salida abreviada para evitar publicar tokens temporales de pruebas.

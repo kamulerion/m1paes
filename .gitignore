@@ -1,0 +1,32 @@
+# Dependencias
+node_modules/
+
+# Entorno y secretos (nunca se versiona)
+.env
+.env.local
+*.pem
+
+# Salidas de build / cobertura
+/coverage/
+dist/
+build/
+coverage/
+
+# Registros
+*.log
+npm-debug.log*
+
+# Base de datos (dumps locales, datos de prueba)
+db/data/
+*.dump
+*.sql.gz
+
+# Editores y sistema
+.vscode/
+.idea/
+Thumbs.db
+.DS_Store
+
+# Python (scripts de generación de documentos)
+__pycache__/
+*.pyc

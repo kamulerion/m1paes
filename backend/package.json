@@ -1,0 +1,45 @@
+{
+  "name": "m1paes-backend",
+  "version": "0.2.0",
+  "private": true,
+  "description": "API REST del MVP M1PAES (PAES Competencia Matemática 1) - arquitectura en 3 capas con MVC + Repository",
+  "main": "src/index.js",
+  "license": "UNLICENSED",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/index.js",
+    "dev": "node --watch --env-file-if-exists=.env src/index.js",
+    "test": "jest --runInBand --testPathIgnorePatterns=/tests/db/ --testPathIgnorePatterns=/tests/integration/",
+    "test:watch": "jest --watch --testPathIgnorePatterns=/tests/db/ --testPathIgnorePatterns=/tests/integration/",
+    "test:db": "node --env-file-if-exists=.env node_modules/jest/bin/jest.js --runInBand tests/db tests/integration",
+    "test:all": "node --env-file-if-exists=.env node_modules/jest/bin/jest.js --runInBand",
+    "test:coverage": "node --env-file-if-exists=.env node_modules/jest/bin/jest.js --runInBand --coverage",
+    "benchmark": "node --env-file-if-exists=.env scripts/benchmark.js",
+    "lint": "eslint . && cd .. && node backend/node_modules/eslint/bin/eslint.js --config backend/eslint.frontend.config.js frontend/src",
+    "admin:bootstrap": "node --env-file-if-exists=.env scripts/bootstrap-superadmin.js",
+    "db:reset": "node --env-file-if-exists=.env scripts/reset-db.js"
+  },
+  "dependencies": {
+    "@node-rs/argon2": "^2.2.1",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "helmet": "^8.1.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.16.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "eslint": "^9.39.0",
+    "eslint-plugin-react": "^7.37.5",
+    "globals": "^16.5.0",
+    "jest": "^30.0.0",
+    "supertest": "^7.1.4"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "verbose": true
+  }
+}

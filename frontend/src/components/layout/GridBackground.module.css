@@ -1,0 +1,73 @@
+/* Fondo tipo hoja cuadriculada en movimiento lento.
+   Se anima con transform (GPU) desplazando exactamente un módulo mayor
+   (--grid-major), por lo que el bucle es continuo y sin saltos. */
+
+.root {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--paper);
+}
+
+.grid {
+  position: absolute;
+  inset: calc(var(--grid-major) * -1);
+  background-image:
+    /* líneas mayores cada 5 cuadros */
+    linear-gradient(to right, var(--grid-line-major) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line-major) 1px, transparent 1px),
+    /* líneas menores */
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size:
+    var(--grid-major) var(--grid-major),
+    var(--grid-major) var(--grid-major),
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  animation: drift var(--grid-speed) linear infinite;
+  will-change: transform;
+}
+
+@keyframes drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(var(--grid-major), var(--grid-major), 0); }
+}
+
+/* Suaviza bordes para que el contenido destaque al centro */
+.vignette {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 55%, rgba(253, 248, 238, 0.85) 100%);
+}
+
+.symbol {
+  position: absolute;
+  font-family: 'Times New Roman', Georgia, serif;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--eje);
+  opacity: 0.12;
+  user-select: none;
+  animation: float 18s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(-6deg); }
+  50% { transform: translateY(-22px) rotate(6deg); }
+}
+
+/* En pantallas pequeñas se ocultan algunos símbolos para no saturar */
+@media (max-width: 720px) {
+  .symbol:nth-child(n + 6) { display: none; }
+  .symbol { opacity: 0.08; }
+}
+
+/* Respeta la preferencia del sistema de reducir movimiento */
+@media (prefers-reduced-motion: reduce) {
+  .grid,
+  .symbol {
+    animation: none !important;
+  }
+}

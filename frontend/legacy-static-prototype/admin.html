@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración — M1PAES</title>
+  <meta name="description" content="Panel del Superadmin: instituciones, administradores, contenido, ejercicios y simulacros.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav><a href="/">Inicio</a> <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a></nav>
+  </header>
+
+  <main class="admin">
+    <h1>Panel de administración</h1>
+    <p class="badge" id="rol-admin">…</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <nav class="secciones" role="tablist" aria-label="Secciones del panel">
+      <button type="button" class="seccion activa" data-seccion="instituciones" role="tab"
+              aria-selected="true" aria-controls="seccion-instituciones">Instituciones (RF-05)</button>
+      <button type="button" class="seccion" data-seccion="administradores" role="tab"
+              aria-selected="false" aria-controls="seccion-administradores">Administradores (RF-06)</button>
+      <button type="button" class="seccion" data-seccion="contenido" role="tab"
+              aria-selected="false" aria-controls="seccion-contenido">Ejes y lecciones (RF-08)</button>
+      <button type="button" class="seccion" data-seccion="ejercicios" role="tab"
+              aria-selected="false" aria-controls="seccion-ejercicios">Ejercicios (RF-09)</button>
+      <button type="button" class="seccion" data-seccion="simulacros" role="tab"
+              aria-selected="false" aria-controls="seccion-simulacros">Simulacros (RF-10)</button>
+      <button type="button" class="seccion" data-seccion="metricas" role="tab"
+              aria-selected="false" aria-controls="seccion-metricas">Métricas (RF-17)</button>
+    </nav>
+
+    <!-- RF-05: instituciones bajo convenio B2B -->
+    <section id="seccion-instituciones" class="panel activa" role="tabpanel" aria-label="Instituciones">
+      <h2>Instituciones bajo convenio</h2>
+      <form id="form-institucion" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="inst-id">
+        <div>
+          <label for="inst-nombre">Nombre</label>
+          <input id="inst-nombre" type="text" maxlength="120" required>
+        </div>
+        <div>
+          <label for="inst-rut">RUT identificador</label>
+          <input id="inst-rut" type="text" maxlength="20" placeholder="76.123.456-7" required>
+        </div>
+        <div>
+          <label for="inst-convenio">Tipo de convenio</label>
+          <select id="inst-convenio">
+            <option value="B2B_PREMIUM">B2B_PREMIUM</option>
+            <option value="B2B_BASIC">B2B_BASIC</option>
+            <option value="B2B_PILOTO">B2B_PILOTO</option>
+          </select>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="inst-boton">Crear institución</button>
+          <button class="boton secundario oculto" type="button" id="inst-cancelar">Cancelar edición</button>
+          <p id="inst-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <h3>Listado</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-instituciones">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>RUT</th><th>Convenio</th><th>Usuarios</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RF-06: administradores de institución -->
+    <section id="seccion-administradores" class="panel" role="tabpanel" aria-label="Administradores">
+      <h2>Administradores de institución</h2>
+      <form id="form-administrador" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="adm-id">
+        <div>
+          <label for="adm-nombre">Nombre</label>
+          <input id="adm-nombre" type="text" maxlength="100" required>
+        </div>
+        <div>
+          <label for="adm-correo">Correo electrónico</label>
+          <input id="adm-correo" type="email" maxlength="150" required>
+        </div>
+        <div id="adm-grupo-password">
+          <label for="adm-password">Contraseña</label>
+          <input id="adm-password" type="password" minlength="8" autocomplete="new-password">
+        </div>
+        <div>
+          <label for="adm-institucion">Institución</label>
+          <select id="adm-institucion" required></select>
+        </div>
+        <div>
+          <label for="adm-cargo">Cargo</label>
+          <input id="adm-cargo" type="text" maxlength="50" placeholder="Jefe de UTP">
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="adm-boton">Crear administrador</button>
+          <button class="boton secundario oculto" type="button" id="adm-cancelar">Cancelar edición</button>
+          <p id="adm-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <h3>Listado</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-administradores">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Correo</th><th>Cargo</th><th>Institución</th><th>Estado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RF-08: ejes y lecciones -->
+    <section id="seccion-contenido" class="panel" role="tabpanel" aria-label="Ejes y lecciones">
+      <h2>Ejes temáticos</h2>
+      <form id="form-eje" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="eje-id">
+        <div>
+          <label for="eje-nombre">Nombre del eje</label>
+          <input id="eje-nombre" type="text" maxlength="100" required>
+        </div>
+        <div>
+          <label for="eje-descripcion">Descripción</label>
+          <input id="eje-descripcion" type="text" maxlength="2000" required>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="eje-boton">Crear eje</button>
+          <button class="boton secundario oculto" type="button" id="eje-cancelar">Cancelar edición</button>
+          <p id="eje-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <div class="tabla-contenedor">
+        <table id="tabla-ejes">
+          <thead>
+            <tr><th>ID</th><th>Eje</th><th>Descripción</th><th>Lecciones</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h2>Lecciones publicadas</h2>
+      <form id="form-leccion" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="lec-id">
+        <div>
+          <label for="lec-eje">Eje temático</label>
+          <select id="lec-eje" required></select>
+        </div>
+        <div>
+          <label for="lec-titulo">Título</label>
+          <input id="lec-titulo" type="text" maxlength="150" required>
+        </div>
+        <div>
+          <label for="lec-orden">Orden</label>
+          <input id="lec-orden" type="number" min="1" max="1000" value="1" required>
+        </div>
+        <div>
+          <label for="lec-video">URL del video (opcional)</label>
+          <input id="lec-video" type="url" maxlength="255" placeholder="https://…">
+        </div>
+        <div class="ancho">
+          <label for="lec-cuerpo">Cuerpo de la teoría</label>
+          <textarea id="lec-cuerpo" minlength="10" required></textarea>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="lec-boton">Publicar lección</button>
+          <button class="boton secundario oculto" type="button" id="lec-cancelar">Cancelar edición</button>
+          <p id="lec-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+      <div class="tabla-contenedor">
+        <table id="tabla-lecciones">
+          <thead>
+            <tr><th>ID</th><th>Eje</th><th>Título</th><th>Orden</th><th>Publicada</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RF-09: banco de ejercicios -->
+    <section id="seccion-ejercicios" class="panel" role="tabpanel" aria-label="Ejercicios">
+      <h2>Banco de ejercicios</h2>
+      <form id="form-ejercicio" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="ejr-id">
+        <div>
+          <label for="ejr-contenido">Lección</label>
+          <select id="ejr-contenido" required></select>
+        </div>
+        <div>
+          <label for="ejr-dificultad">Dificultad</label>
+          <select id="ejr-dificultad">
+            <option value="FACIL">FACIL</option>
+            <option value="MEDIA" selected>MEDIA</option>
+            <option value="DIFICIL">DIFICIL</option>
+          </select>
+        </div>
+        <div class="ancho">
+          <label for="ejr-enunciado">Enunciado</label>
+          <textarea id="ejr-enunciado" minlength="5" required></textarea>
+        </div>
+        <div class="ancho">
+          <label for="ejr-explicacion">Explicación de la solución</label>
+          <textarea id="ejr-explicacion" minlength="5" required></textarea>
+        </div>
+        <div class="ancho">
+          <span class="etiqueta">Alternativas (4 a 5; marca exactamente una como correcta)</span>
+          <div id="ejr-alternativas"></div>
+          <button class="boton secundario" type="button" id="ejr-agregar">Agregar alternativa</button>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="ejr-boton">Crear ejercicio</button>
+          <button class="boton secundario oculto" type="button" id="ejr-cancelar">Cancelar edición</button>
+          <p id="ejr-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <h3>Listado</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-ejercicios">
+          <thead>
+            <tr><th>ID</th><th>Lección</th><th>Enunciado</th><th>Dificultad</th><th>Alts.</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- RF-10: simulacros -->
+    <section id="seccion-simulacros" class="panel" role="tabpanel" aria-label="Simulacros">
+      <h2>Simulacros (formato oficial: 65 preguntas / 140 minutos)</h2>
+      <form id="form-simulacro" class="formulario formulario-columnas" novalidate>
+        <input type="hidden" id="sim-id">
+        <div>
+          <label for="sim-nombre">Nombre</label>
+          <input id="sim-nombre" type="text" maxlength="120" required>
+        </div>
+        <div>
+          <label for="sim-cantidad">Cantidad de preguntas</label>
+          <input id="sim-cantidad" type="number" min="1" max="120" value="65" required>
+        </div>
+        <div>
+          <label for="sim-tiempo">Tiempo límite (minutos)</label>
+          <input id="sim-tiempo" type="number" min="1" max="300" value="140" required>
+        </div>
+        <div class="ancho">
+          <button class="boton" type="submit" id="sim-boton">Crear simulacro</button>
+          <button class="boton secundario oculto" type="button" id="sim-cancelar">Cancelar edición</button>
+          <p id="sim-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+
+      <div class="tabla-contenedor">
+        <table id="tabla-simulacros">
+          <thead>
+            <tr><th>ID</th><th>Nombre</th><th>Preguntas</th><th>Tiempo</th><th>Compuestas</th><th>Creado</th><th>Acciones</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <!-- Composición de preguntas (numeradas 1..n) -->
+      <section id="panel-composicion" class="oculto" aria-label="Composición del simulacro">
+        <h3 id="comp-titulo">Composición</h3>
+        <p id="comp-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+        <div class="listas">
+          <div class="lista-caja">
+            <h4>Ejercicios disponibles (clic para agregar)</h4>
+            <ul id="comp-disponibles"></ul>
+          </div>
+          <div class="lista-caja">
+            <h4>Composición del simulacro (en orden)</h4>
+            <ul id="comp-orden"></ul>
+          </div>
+        </div>
+        <div class="enlaces">
+          <button class="boton" type="button" id="comp-guardar" style="max-width:260px">Guardar composición</button>
+          <button class="boton secundario" type="button" id="comp-cerrar" style="max-width:200px">Cerrar</button>
+        </div>
+      </section>
+    </section>
+
+    <!-- RF-17: métricas globales de concurrencia y actividad -->
+    <section id="seccion-metricas" class="panel" role="tabpanel" aria-label="Métricas globales">
+      <h2>Métricas globales de la plataforma</h2>
+      <p class="etiqueta">Indicadores agregados de concurrencia y actividad (CP-20).</p>
+      <div class="cifras" id="met-concurrencia"></div>
+
+      <h3>Usuarios por rol</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-metricas-roles">
+          <thead>
+            <tr><th>Rol</th><th>Usuarios</th><th>Activos</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h3>Actividad</h3>
+      <div class="cifras" id="met-actividad"></div>
+
+      <h3>Últimos 7 días</h3>
+      <div class="tabla-contenedor">
+        <table id="tabla-metricas-serie">
+          <thead>
+            <tr><th>Fecha</th><th>Prácticas</th><th>Simulacros</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="met-mensaje" class="mensaje" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/panel.js"></script>
+  <script src="/js/admin/admin.js"></script>
+  <script src="/js/admin/instituciones.js"></script>
+  <script src="/js/admin/administradores.js"></script>
+  <script src="/js/admin/contenido.js"></script>
+  <script src="/js/admin/ejercicios.js"></script>
+  <script src="/js/admin/simulacros.js"></script>
+  <script src="/js/admin/metricas.js"></script>
+</body>
+</html>

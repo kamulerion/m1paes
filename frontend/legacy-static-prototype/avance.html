@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mi avance — M1PAES</title>
+  <meta name="description" content="Panel de progreso por eje temático y historial de actividades.">
+  <link rel="stylesheet" href="/css/base.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" style="text-decoration:none;color:#fff">M1<span class="accent">PAES</span></a>
+    <nav>
+      <a href="/">Inicio</a> <a href="/contenido.html">Contenidos</a>
+      <a href="/ejercicios.html">Ejercicios</a>
+      <a href="/simulacro.html">Simulacros</a>
+      <a href="/perfil.html">Mi perfil</a> <a href="#" id="salir">Cerrar sesión</a>
+    </nav>
+  </header>
+
+  <main class="estudiante">
+    <h1>Mi avance</h1>
+    <p class="badge">Fase 3 · RF-13</p>
+    <p id="mensaje-global" class="mensaje" role="status" aria-live="polite"></p>
+
+    <!-- RF-15 (Fase 5): publicidad segmentada — solo cuentas Free reciben anuncios -->
+    <aside id="publicidad" class="publicidad oculto" aria-label="Publicidad"></aside>
+
+    <!-- CP-18: resumen y porcentaje por eje -->
+    <section aria-label="Resumen">
+      <div class="cifras" id="resumen"></div>
+      <p class="etiqueta" style="margin-top:1.5rem">Progreso global: <span id="global-valor"></span></p>
+    </section>
+
+    <section aria-label="Progreso por eje">
+      <h2>Porcentaje por eje temático</h2>
+      <div id="por-eje"></div>
+      <p id="sin-datos" class="oculto">Aún no registras actividad: resuelve ejercicios para ver tu progreso.</p>
+    </section>
+
+    <section aria-label="Historial">
+      <h2>Historial reciente</h2>
+      <div class="tabla-contenedor">
+        <table id="tabla-historial">
+          <thead>
+            <tr><th>Fecha</th><th>Actividad</th><th>Puntaje</th><th>Duración</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="sin-historial" class="oculto">Todavía no hay movimientos registrados.</p>
+    </section>
+
+    <!-- RF-16/CP-10: los eventos del calendario se publican a la sede del estudiante -->
+    <section aria-label="Calendario de ensayos">
+      <h2>Próximos ensayos de tu sede</h2>
+      <div class="tabla-contenedor">
+        <table id="tabla-calendario-sede">
+          <thead>
+            <tr><th>Fecha</th><th>Ensayo</th><th>Descripción</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <p id="sin-eventos" class="oculto">Tu sede aún no ha publicado ensayos en el calendario.</p>
+    </section>
+  </main>
+
+  <footer>
+    <small>M1PAES · Ingeniería de Software · INACAP Maipú (Sección TI3V43)</small>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/util.js"></script>
+  <script src="/js/auth.js"></script>
+  <script src="/js/estudiante/avance.js"></script>
+  <script src="/js/publicidad.js"></script>
+</body>
+</html>
