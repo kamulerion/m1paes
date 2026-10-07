@@ -3,7 +3,7 @@ services:
     name: m1paes
     runtime: node
     plan: free
-    buildCommand: npm ci --prefix frontend && npm --prefix frontend run build && npm ci --prefix backend --omit=dev
+    buildCommand: npm ci --include=dev --prefix frontend && npm --prefix frontend run build && npm ci --prefix backend --omit=dev
     startCommand: npm --prefix backend start
     healthCheckPath: /api/health
     envVars:
