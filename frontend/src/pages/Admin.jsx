@@ -10,12 +10,12 @@ import { Spinner } from '../components/ui/Feedback.jsx'
 import { api, obtenerSesion } from '../api.js'
 
 const TABS = [
-  { id: 'instituciones', label: 'Instituciones (RF-05)' },
-  { id: 'administradores', label: 'Administradores (RF-06)' },
-  { id: 'contenido', label: 'Ejes y lecciones (RF-08)' },
-  { id: 'ejercicios', label: 'Ejercicios (RF-09)' },
-  { id: 'simulacros', label: 'Simulacros (RF-10)' },
-  { id: 'metricas', label: 'Métricas (RF-17)' },
+  { id: 'instituciones', label: 'Instituciones' },
+  { id: 'administradores', label: 'Administradores' },
+  { id: 'contenido', label: 'Ejes y lecciones' },
+  { id: 'ejercicios', label: 'Ejercicios' },
+  { id: 'simulacros', label: 'Simulacros' },
+  { id: 'metricas', label: 'Métricas' },
 ]
 
 export default function Admin() {

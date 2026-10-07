@@ -30,7 +30,6 @@ export default function Avance() {
   return (
     <div className="stack">
       <h1>Mi avance</h1>
-      <p><Badge variant="accent">Fase 3 · RF-13</Badge></p>
       {mensaje && <Alert variant="error">{mensaje}</Alert>}
 
       {datos && (

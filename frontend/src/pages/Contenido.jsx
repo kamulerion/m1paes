@@ -36,7 +36,6 @@ export default function Contenido() {
   return (
     <div className="stack">
       <h1>Contenidos por eje temático</h1>
-      <p><Badge variant="accent">Fase 3 · RF-18</Badge></p>
       {mensaje && <Alert variant="error">{mensaje}</Alert>}
 
       {!leccion ? (

@@ -103,7 +103,6 @@ export default function Simulacro() {
   return (
     <div className="stack">
       <h1>Simulacros oficiales</h1>
-      <p><Badge variant="accent">Fase 3 · RF-12</Badge></p>
       {mensaje && <Alert variant="info">{mensaje}</Alert>}
 
       {fase === 'lista' && (

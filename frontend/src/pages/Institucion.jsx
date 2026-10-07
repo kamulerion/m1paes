@@ -8,9 +8,9 @@ import Alert from '../components/ui/Alert.jsx'
 import { api, obtenerSesion } from '../api.js'
 
 const TABS = [
-  { id: 'estudiantes', label: 'Estudiantes (RF-07)' },
-  { id: 'reporte', label: 'Reportes (RF-14)' },
-  { id: 'calendario', label: 'Calendario (RF-16)' },
+  { id: 'estudiantes', label: 'Estudiantes' },
+  { id: 'reporte', label: 'Reportes' },
+  { id: 'calendario', label: 'Calendario' },
 ]
 
 export default function Institucion() {
