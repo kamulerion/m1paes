@@ -25,6 +25,7 @@ const progresoRoutes = require('./routes/progreso.routes');
 const institucionRoutes = require('./routes/institucion.routes');
 const calendarioEstudianteRoutes = require('./routes/calendario-estudiante.routes');
 const metricasRoutes = require('./routes/metricas.routes');
+const databaseAdminRoutes = require('./routes/database-admin.routes');
 const publicidadRoutes = require('./routes/publicidad.routes');
 const { notFound, errorHandler } = require('./middleware/error-handler');
 
@@ -62,6 +63,7 @@ function createApp() {
   app.use('/api/admin/simulacros', simulacrosRoutes);
   // Métricas globales del Superadmin (RF-17 — Fase 4)
   app.use('/api/admin/metricas', metricasRoutes);
+  app.use('/api/admin/database', databaseAdminRoutes);
   // Contenido visible con sesión (estudiantes incluidos)
   app.use('/api/ejes', contenidoPublicoRoutes);
   // Módulo estudiante (RF-18, RF-11, RF-12, RF-13 — Fase 3)

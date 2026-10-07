@@ -8,6 +8,7 @@ import Field, { Input, Select, Textarea } from '../components/ui/Input.jsx'
 import Alert from '../components/ui/Alert.jsx'
 import { Spinner } from '../components/ui/Feedback.jsx'
 import { api, obtenerSesion } from '../api.js'
+import DatabaseAdmin from './DatabaseAdmin.jsx'
 import styles from './Admin.module.css'
 
 const TABS = [
@@ -17,6 +18,7 @@ const TABS = [
   { id: 'ejercicios', label: 'Ejercicios' },
   { id: 'simulacros', label: 'Simulacros' },
   { id: 'metricas', label: 'Métricas' },
+  { id: 'database', label: 'Base de datos' },
 ]
 
 export default function Admin() {
@@ -431,6 +433,8 @@ export default function Admin() {
           </Table>
         </section>
       )}
+
+      {tab === 'database' && <DatabaseAdmin />}
     </div>
   )
 }

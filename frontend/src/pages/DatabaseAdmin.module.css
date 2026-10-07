@@ -1,0 +1,62 @@
+.layout {
+  display: grid;
+  grid-template-columns: minmax(180px, 240px) minmax(0, 1fr);
+  gap: var(--sp-5);
+}
+
+.tableList {
+  display: grid;
+  gap: var(--sp-1);
+  max-height: 560px;
+  overflow: auto;
+  list-style: none;
+  padding: 0;
+}
+
+.tableList button {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  padding: 0.55rem 0.7rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  text-align: left;
+}
+
+.tableList button:hover,
+.tableList .selected {
+  background: var(--paper-2);
+  border-color: var(--ink-soft);
+}
+
+.tableList small {
+  color: var(--ink-soft);
+}
+
+.cell {
+  max-width: 360px;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .tableList {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    max-height: 250px;
+  }
+}
