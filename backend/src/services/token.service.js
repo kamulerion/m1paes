@@ -30,6 +30,11 @@ function generarTokenRecuperacion() {
   return crypto.randomBytes(32).toString('hex');
 }
 
+/** Persiste solo la huella SHA-256 del token; el valor original solo se envía por correo. */
+function hashTokenRecuperacion(token) {
+  return crypto.createHash('sha256').update(token).digest('hex');
+}
+
 /** Fecha de caducidad de un token de recuperación (por defecto, 30 min). */
 function expiracionRecuperacion(minutos = 30) {
   return new Date(Date.now() + minutos * 60 * 1000);
@@ -39,5 +44,6 @@ module.exports = {
   firmarSesion,
   verificarSesion,
   generarTokenRecuperacion,
+  hashTokenRecuperacion,
   expiracionRecuperacion,
 };

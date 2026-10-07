@@ -37,7 +37,7 @@ function createApp() {
 
   app.disable('x-powered-by');
   if (config.trustProxy) app.set('trust proxy', config.trustProxy);
-  app.use(helmet());
+  app.use(helmet({ referrerPolicy: { policy: 'no-referrer' } }));
 
   // CORS solo si se configura un origen explícito; por defecto el frontend
   // se sirve desde la misma API (mismo origen) y no hace falta abrirlo.

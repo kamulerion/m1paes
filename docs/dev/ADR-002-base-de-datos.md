@@ -61,5 +61,5 @@ instalado en la máquina de desarrollo.
 - `db:reset` es destructivo por diseño: solo se usa en entornos de desarrollo
   (el script SQL lleva la advertencia explícita).
 - La guía de despliegue y sus controles pendientes están en ADR-004 y
-  `LEERME-DESPLIEGUE.md`. El acceso público sigue bloqueado hasta configurar
+  `ADR-004-despliegue.md`. El acceso público sigue bloqueado hasta configurar
   copias y comprobar una restauración en el servidor de destino.

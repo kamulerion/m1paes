@@ -107,13 +107,14 @@ se registran como fallos de la solicitud y pueden reintentarse.
   corte instantáneo, se añadirá una tabla de sesiones (nuevo ADR).
 - En desarrollo las sesiones se pierden al reiniciar la API (secret efímero
   solo si `JWT_SECRET` no está definido).
-- **Resuelto en la Fase 5 (pulido OWASP):** límite de intentos de login —
+- **Resuelto para el piloto:** límite de intentos de login —
   `crearLimitarLogin` en `middleware/security.middleware.js`: 10 intentos
-  fallidos por `IP + correo` en 15 min → **429** con `Retry-After` (un login
-  válido limpia el contador; estado en memoria por proceso, sin dependencias;
-  store externo quedará a cargo del ADR-004 si en producción hay varios
-  procesos o reverse proxy) — y cabeceras anti-cache: `Cache-Control:
-  no-store, private` + `Pragma: no-cache` en todas las respuestas de
-  `/api/auth/*`.
+  fallidos por IP+correo y 100 por IP en 15 min → **429** con `Retry-After`;
+  recuperación limitada a 5 solicitudes por IP/15 min y 3 por correo/hora.
+  Los contadores son locales a una instancia y se reinician al reiniciarla;
+  esto no sustituye un almacén compartido y controles perimetrales para un
+  servicio público. Los tokens de recuperación se guardan como huellas SHA-256,
+  no como el valor enviado por correo. Se mantienen las cabeceras anti-cache:
+  `Cache-Control: no-store, private` + `Pragma: no-cache` en `/api/auth/*`.
 - La cookie `secure=true` solo funciona sobre HTTPS: en el servidor dedicado
   deberá configurarse TLS (RNF-02) antes de `NODE_ENV=production`.

@@ -5,62 +5,120 @@ const { AppError } = require('../utils/AppError');
 /**
  * Pulido OWASP de la Fase 5 (promesas abiertas en la ADR-003):
  *
- * - `crearLimitarLogin` — limita el fuerza bruta contra POST /api/auth/login
- *   con ventana deslizante en memoria: 10 intentos FALLIDOS por IP + correo
- *   en 15 minutos → responde 429 con cabecera Retry-After. Un inicio de
- *   sesión exitoso limpia el contador, de modo que el usuario legítimo nunca
- *   queda bloqueado. La clave combina IP + correo: protege una cuenta
- *   concreta desde un origen sin castigar a otros usuarios que comparten IP.
+ * - `crearLimitarLogin` — limita POST /api/auth/login a 10 fallos por
+ *   combinación IP + correo y 100 fallos por IP en 15 minutos.
+ * - `crearLimitarRecuperacion` — limita solicitudes de correo de recuperación
+ *   a 5 por IP cada 15 minutos y 3 por correo cada hora.
  * - `noStore` — cabeceras anti-cache para las respuestas sensibles de
  *   /api/auth/* (datos de sesión, cookies y tokens de recuperación).
  *
- * El estado del limitador vive en memoria por proceso: correcto para el MVP
- * de proceso único (una fábrica por aplicación). Si en producción se usan
- * varios procesos o un reverse proxy, el ADR-004 de deploy evaluará un store
- * externo (p. ej. Redis) — alcance conocido y documentado.
+ * Los límites viven en memoria por proceso; reinicios los reinician. Esto es
+ * solo una defensa básica para un piloto de una instancia. Para una audiencia
+ * pública se requiere un almacén compartido y límites por cuenta/IP.
  */
 
 const VENTANA_MS = 15 * 60 * 1000;
 const MAXIMO_FALLOS = 10;
+const MAXIMO_FALLOS_IP = 100;
+const MAXIMO_RECUPERACION_IP = 5;
+const MAXIMO_RECUPERACION_CORREO = 3;
+const VENTANA_RECUPERACION_CORREO_MS = 60 * 60 * 1000;
+const MAX_REGISTROS = 10000;
 
-/** Crea un limitador de intentos de login (una instancia por aplicación). */
-function crearLimitarLogin({ ventanaMs = VENTANA_MS, maximo = MAXIMO_FALLOS } = {}) {
-  const intentos = new Map(); // "ip|correo" → { fallidos, expira }
+function registroPara(registros, clave, ahora, ventanaMs) {
+  let registro = registros.get(clave);
+  if (registro && registro.expira > ahora) return registro;
 
-  function entradaDe(req) {
-    const correo = String(req.body?.correo ?? '').toLowerCase().trim();
-    const clave = `${req.ip}|${correo}`;
-    const ahora = Date.now();
-    let registro = intentos.get(clave);
-    if (!registro || registro.expira <= ahora) {
-      registro = { fallidos: 0, expira: ahora + ventanaMs };
-      intentos.set(clave, registro);
-      // Limpieza oportunista de las ventanas caducadas.
-      for (const [k, v] of intentos) {
-        if (v.expira <= ahora) intentos.delete(k);
-      }
+  if (registro) registros.delete(clave);
+  if (registros.size >= MAX_REGISTROS) {
+    for (const [k, v] of registros) {
+      if (v.expira <= ahora) registros.delete(k);
     }
-    return { clave, registro };
+    while (registros.size >= MAX_REGISTROS) {
+      registros.delete(registros.keys().next().value);
+    }
   }
 
-  return function limitarIntentosLogin(req, res, next) {
-    const { clave, registro } = entradaDe(req);
+  registro = { fallidos: 0, enCurso: 0, expira: ahora + ventanaMs };
+  registros.set(clave, registro);
+  return registro;
+}
 
-    if (registro.fallidos >= maximo) {
-      const reintentoSegundos = Math.max(1, Math.ceil((registro.expira - Date.now()) / 1000));
+function ipCliente(req) {
+  return String(req.ip || req.socket?.remoteAddress || 'desconocida');
+}
+
+function rechazarPorFrecuencia(res, next, registro, ahora) {
+  const reintentoSegundos = Math.max(1, Math.ceil((registro.expira - ahora) / 1000));
+  res.set('Retry-After', String(reintentoSegundos));
+  return next(new AppError(429, 'Demasiadas solicitudes. Intenta más tarde.'));
+}
+
+/** Crea un limitador de intentos de login (una instancia por aplicación). */
+function crearLimitarLogin({
+  ventanaMs = VENTANA_MS,
+  maximo = MAXIMO_FALLOS,
+  maximoIp = MAXIMO_FALLOS_IP,
+} = {}) {
+  const intentos = new Map();
+
+  return function limitarIntentosLogin(req, res, next) {
+    const ahora = Date.now();
+    const ip = ipCliente(req);
+    const correo = String(req.body?.correo ?? '').toLowerCase().trim().slice(0, 150);
+    const claveIp = `login:ip:${ip}`;
+    const claveCuenta = `login:cuenta:${ip}:${correo}`;
+    const porIp = registroPara(intentos, claveIp, ahora, ventanaMs);
+    const porCuenta = registroPara(intentos, claveCuenta, ahora, ventanaMs);
+
+    if (porIp.fallidos + porIp.enCurso >= maximoIp ||
+        porCuenta.fallidos + porCuenta.enCurso >= maximo) {
+      const registroBloqueado = porIp.fallidos + porIp.enCurso >= maximoIp
+        ? porIp
+        : porCuenta;
+      const reintentoSegundos = Math.max(1, Math.ceil((registroBloqueado.expira - ahora) / 1000));
       res.set('Retry-After', String(reintentoSegundos));
       return next(new AppError(429, 'Demasiados intentos de inicio de sesión. Intenta más tarde.'));
     }
 
-    // Solo los 401 (credenciales inválidas) alimentan el contador; una
-    // sesión válida (200) reinicia la clave.
+    porIp.enCurso += 1;
+    porCuenta.enCurso += 1;
     res.on('finish', () => {
+      porIp.enCurso = Math.max(0, porIp.enCurso - 1);
+      porCuenta.enCurso = Math.max(0, porCuenta.enCurso - 1);
       if (res.statusCode === 401) {
-        registro.fallidos += 1;
+        porIp.fallidos += 1;
+        porCuenta.fallidos += 1;
       } else if (res.statusCode === 200) {
-        intentos.delete(clave);
+        porCuenta.fallidos = 0;
       }
     });
+    next();
+  };
+}
+
+/** Protección básica contra abuso de correos de recuperación en un piloto. */
+function crearLimitarRecuperacion() {
+  const solicitudes = new Map();
+  return function limitarRecuperacion(req, res, next) {
+    const ahora = Date.now();
+    const ip = ipCliente(req);
+    const correo = String(req.body?.correo ?? '').toLowerCase().trim().slice(0, 150);
+    const porIp = registroPara(solicitudes, `recuperar:ip:${ip}`, ahora, VENTANA_MS);
+    const porCorreo = registroPara(
+      solicitudes,
+      `recuperar:correo:${correo}`,
+      ahora,
+      VENTANA_RECUPERACION_CORREO_MS
+    );
+
+    const bloqueado = porIp.fallidos >= MAXIMO_RECUPERACION_IP
+      ? porIp
+      : (porCorreo.fallidos >= MAXIMO_RECUPERACION_CORREO ? porCorreo : null);
+    if (bloqueado) return rechazarPorFrecuencia(res, next, bloqueado, ahora);
+
+    porIp.fallidos += 1;
+    porCorreo.fallidos += 1;
     next();
   };
 }
@@ -72,4 +130,13 @@ function noStore(_req, res, next) {
   next();
 }
 
-module.exports = { crearLimitarLogin, noStore, VENTANA_MS, MAXIMO_FALLOS };
+module.exports = {
+  crearLimitarLogin,
+  crearLimitarRecuperacion,
+  noStore,
+  VENTANA_MS,
+  MAXIMO_FALLOS,
+  MAXIMO_FALLOS_IP,
+  MAXIMO_RECUPERACION_IP,
+  MAXIMO_RECUPERACION_CORREO,
+};

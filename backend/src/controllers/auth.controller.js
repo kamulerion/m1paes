@@ -7,6 +7,7 @@ const { hashPassword, verificarPassword } = require('../services/password.servic
 const {
   firmarSesion,
   generarTokenRecuperacion,
+  hashTokenRecuperacion,
   expiracionRecuperacion,
 } = require('../services/token.service');
 const mailer = require('../services/mailer.service');
@@ -124,13 +125,13 @@ async function recuperar(req, res, next) {
       const token = generarTokenRecuperacion();
       await tokenRepository.crearRecuperacion({
         idUsuario: usuario.id_usuario,
-        token,
+        token: hashTokenRecuperacion(token),
         expiraEn: expiracionRecuperacion(30),
       });
       await mailer.enviarRecuperacion({
         para: usuario.correo,
         token,
-        enlace: `/restablecer?token=${encodeURIComponent(token)}`,
+        enlace: `/restablecer#token=${encodeURIComponent(token)}`,
       });
       // Solo fuera de producción el token viaja en la respuesta para poder
       // automatizar la CP-05 sin servidor de correo (ADR-003).
@@ -149,9 +150,12 @@ async function restablecer(req, res, next) {
     const body = req.body || {};
     const token = String(body.token ?? '').trim();
     const password = body.password;
-    lanzarSiInvalido([token ? null : 'el token es obligatorio', validarPassword(password)]);
+    lanzarSiInvalido([
+      /^[a-f0-9]{64}$/i.test(token) ? null : 'el token de recuperación no es válido',
+      validarPassword(password),
+    ]);
 
-    const registro = await tokenRepository.buscarRecuperacionValida(token);
+    const registro = await tokenRepository.buscarRecuperacionValida(hashTokenRecuperacion(token));
     if (!registro) {
       throw new AppError(400, 'El token es inválido o ha expirado');
     }

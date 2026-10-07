@@ -8,14 +8,16 @@
 
 - La aplicación se publica como un único origen HTTPS: Render termina TLS y reenvía al proceso Express, que sirve `frontend/dist` y `/api/*`.
 - En Render, Express escucha en `0.0.0.0` y en el puerto asignado por `PORT`; `TRUST_PROXY=1` habilita la lectura de protocolo e IP detrás del proxy.
-- La API corre como proceso único mientras el limitador de login mantenga su estado en memoria. Si se escala a varios procesos, primero se debe migrar ese estado a un almacén compartido.
+- Los límites básicos de login y recuperación viven en memoria por proceso y se reinician al reiniciar el servicio. Son adecuados solo para un piloto corto de una instancia; para público real hacen falta límites distribuidos y monitoreo de abuso.
 - PostgreSQL administrado en Neon usa TLS y un pooler; `db:reset` es solo desarrollo y se niega a operar en producción.
 - La recuperación de contraseña usa la API HTTPS de Resend porque el nivel gratuito de Render bloquea SMTP saliente en los puertos estándar. La clave y el remitente verificado se inyectan al proceso.
 - El arranque en producción falla si falta el secreto JWT, la clave API de Resend, el remitente, la URL HTTPS pública, las credenciales de base de datos o el build del frontend.
 
 ## Variables de producción
 
-Ver `backend/.env.example` y `LEERME-DESPLIEGUE.md`. Los secretos no se almacenan en Git ni se copian al artefacto. Genera `JWT_SECRET` con `crypto.randomBytes(48).toString('hex')`; no reutilices una clave entre entornos.
+Ver `backend/.env.example` y `render.yaml`. Los secretos no se almacenan en Git ni se copian al artefacto. Genera `JWT_SECRET` con `crypto.randomBytes(48).toString('hex')`; no reutilices una clave entre entornos.
+
+Para Render Free, no se dispone de consola interactiva del servicio. Aplica `db/schema.sql` solo a la base Neon vacía y ejecuta el alta inicial del SUPERADMIN desde una terminal local privada, conectada temporalmente a Neon. No guardes la URL con contraseña en Git, capturas ni mensajes. El esquema comienza con `DROP SCHEMA ... CASCADE`: ejecutarlo sobre una base con datos los elimina.
 
 ## Verificaciones que requieren infraestructura real
 
@@ -27,4 +29,4 @@ Ver `backend/.env.example` y `LEERME-DESPLIEGUE.md`. Los secretos no se almacena
 - Compatibilidad verificada en Firefox, Edge y Safari además de Chromium.
 - Privacidad, términos, responsable de datos y soporte publicados antes de habilitar registro público.
 
-Los planes gratuitos usados para este piloto no ofrecen disponibilidad continua ni una estrategia de respaldo de producción. El repositorio por sí solo no puede cerrar estos controles ni confirmar que el servicio está listo para recibir datos reales. La lista operativa para el operador está en `LEERME-DESPLIEGUE.md`.
+Render Free duerme el servicio tras 15 minutos sin tráfico, puede tardar alrededor de un minuto en despertar, y Render indica que sus instancias gratuitas no se deben usar para aplicaciones de producción. Este despliegue sirve solo para una demostración de una semana con datos ficticios o no sensibles. No está listo para datos reales de estudiantes. El repositorio por sí solo no puede cerrar los controles operativos de esta lista.

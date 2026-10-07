@@ -41,11 +41,11 @@ npm run build --prefix frontend
 npm ci --prefix backend --omit=dev
 ```
 
-Configura las variables de producción descritas en `backend/.env.example` y en [`LEERME-DESPLIEGUE.md`](LEERME-DESPLIEGUE.md), aplica `db/schema.sql` **solo a una base nueva o respaldada**, y luego inicia con `npm start --prefix backend`. Usa HTTPS terminado en un proxy inverso; la aplicación escucha en `127.0.0.1` por defecto.
+Configura las variables de producción descritas en `backend/.env.example` y [`docs/dev/ADR-004-despliegue.md`](docs/dev/ADR-004-despliegue.md), aplica `db/schema.sql` **solo a una base nueva y vacía** (el script borra el esquema `public`), y luego inicia con `npm start --prefix backend`. Usa HTTPS terminado en un proxy inverso; la aplicación escucha en `127.0.0.1` por defecto.
 
-La recuperación de contraseña envía por la API HTTPS de Resend en producción. El arranque requiere `JWT_SECRET`, `APP_BASE_URL` HTTPS, acceso a PostgreSQL y `RESEND_API_KEY`/`EMAIL_FROM`. Para el piloto gratuito, revisa [`render.yaml`](render.yaml) y [`LEERME-DESPLIEGUE.md`](LEERME-DESPLIEGUE.md); verifica base de datos, dominio y remitente antes de habilitar usuarios.
+La recuperación de contraseña envía por la API HTTPS de Resend en producción. El arranque requiere `JWT_SECRET`, `APP_BASE_URL` HTTPS, acceso a PostgreSQL y `RESEND_API_KEY`/`EMAIL_FROM`. Para el piloto gratuito, revisa [`render.yaml`](render.yaml) y [`ADR-004`](docs/dev/ADR-004-despliegue.md); verifica base de datos, dominio y remitente antes de habilitar usuarios.
 
-En la base de producción vacía, genera la primera cuenta administradora desde una terminal privada con `npm --prefix backend run admin:bootstrap`. El script pide nombre, correo y contraseña sin mostrarla y se niega a crear otra cuenta inicial si ya existe un SUPERADMIN.
+En la base Neon vacía, genera la primera cuenta administradora desde una terminal privada con `npm --prefix backend run admin:bootstrap`, configurando temporalmente `DATABASE_URL` en el entorno local. El script pide nombre, correo y contraseña sin mostrarla y se niega a crear otra cuenta inicial si ya existe un SUPERADMIN. Render Free no ofrece consola interactiva para ejecutarlo en el servicio.
 
 ## Comandos del backend
 
@@ -75,4 +75,4 @@ docs/evidencias/         Registros históricos de pruebas y capturas
 
 ## Estado y límites conocidos
 
-Los resultados locales más recientes están en [`docs/evidencias/ANEXO-H-reporte-pruebas.md`](docs/evidencias/ANEXO-H-reporte-pruebas.md). La disponibilidad, backups, correo real, HTTPS, dominio y pruebas en navegadores de producción solo se pueden cerrar en la infraestructura de destino. Consulta [`LEERME-DESPLIEGUE.md`](LEERME-DESPLIEGUE.md) para la lista de salida.
+Los resultados locales más recientes están en [`docs/evidencias/ANEXO-H-reporte-pruebas.md`](docs/evidencias/ANEXO-H-reporte-pruebas.md). La disponibilidad, respaldos, correo real, HTTPS, dominio y pruebas en navegadores de producción solo se pueden cerrar en la infraestructura de destino. Consulta [`ADR-004`](docs/dev/ADR-004-despliegue.md) para los pendientes.

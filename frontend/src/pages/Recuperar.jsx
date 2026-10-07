@@ -35,7 +35,7 @@ export default function Recuperar() {
     </>}>
       <Field label="Correo electrónico" required htmlFor="correo"><Input id="correo" type="email" autoComplete="email" maxLength="150" required value={correo} onChange={(e) => setCorreo(e.target.value)} /></Field>
       {mensaje && <Alert variant={mensaje.tipo === 'exito' ? 'success' : 'error'}>{mensaje.texto}</Alert>}
-      {token && <p style={{ fontSize: 'var(--fs-sm)' }}>Entorno de desarrollo: <Link to={`/restablecer?token=${encodeURIComponent(token)}`}>Abrir formulario de contraseña nueva</Link></p>}
+      {token && <p style={{ fontSize: 'var(--fs-sm)' }}>Entorno de desarrollo: <Link to={`/restablecer#token=${encodeURIComponent(token)}`}>Abrir formulario de contraseña nueva</Link></p>}
       <Button full loading={cargando}>Enviar enlace</Button>
     </AuthPage>
   )

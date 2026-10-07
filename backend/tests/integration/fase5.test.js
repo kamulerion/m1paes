@@ -291,7 +291,7 @@ describe('Pulido Fase 5 — OWASP (ADR-003): rate limiting y anti-cache', () => 
     expect(bloqueado.status).toBe(429);
     expect(bloqueado.headers['retry-after']).toBeDefined();
 
-    // La clave es IP + correo: otra cuenta desde la misma IP no queda afectada.
+    // La cuenta recibe un límite propio y la IP tiene además un tope general.
     const otraCuenta = await request(app)
       .post('/api/auth/login')
       .send({ correo: CORREO_FREE, password: CLAVE });
